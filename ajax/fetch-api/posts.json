@@ -1,0 +1,14 @@
+[
+  {
+    "title": "JSON object 1",
+    "body": "Body for JSON object 1"
+  },
+  {
+    "title": "JSON object 2",
+    "body": "Body for JSON object 2"
+  },
+  {
+    "title": "JSON object 3",
+    "body": "Body for JSON object 3"
+  }
+]
