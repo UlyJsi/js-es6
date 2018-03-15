@@ -11,9 +11,9 @@ const ItemCtrl = (function() {
   // data structure / state
   const data = {
     items: [
-      {id: 0, name: "Steak Dinner", calories: 1200},
-      {id: 1, name: "Cookie", calories: 400},
-      {id: 2, name: "Eggs", calories: 300}
+      // {id: 0, name: "Steak Dinner", calories: 1200},
+      // {id: 1, name: "Cookie", calories: 400},
+      // {id: 2, name: "Eggs", calories: 300}
     ],
     currentItem: null,
     totalCalories: 0
@@ -38,6 +38,9 @@ const ItemCtrl = (function() {
       // push new item to data array
       data.items.push(newItem);
       return newItem;
+    },
+    getTotalCalories: function() {
+      
     },
     logData: function() {
       return data;
@@ -83,6 +86,8 @@ const UICtrl = (function() {
       }
     },
     addListItem: function(item) {
+      // show the list
+      document.querySelector(UISelectors.itemList).style.display = "block";
       // create li element
       const li = document.createElement("li");
       li.className = "collection-item";
@@ -98,7 +103,11 @@ const UICtrl = (function() {
       document.querySelector(UISelectors.itemList).insertAdjacentElement("beforeend", li);
     },
     clearInputs: function() {
-
+      document.querySelector(UISelectors.itemNameInput).value = "";
+      document.querySelector(UISelectors.itemCaloriesInput).value = "";
+    },
+    hideList: function() {
+      document.querySelector(UISelectors.itemList).style.display = "none";
     },
     getSelectors: function() {
       return UISelectors;
@@ -128,6 +137,8 @@ const AppCtrl = (function(ItemCtrl, UICtrl) {
       const newItem = ItemCtrl.addItem(input.name, input.calories);
       // add item to UI
       UICtrl.addListItem(newItem);
+      // get total calories
+      const totalCalories = ItemCtrl.getTotalCalories();
       // clear inputs
       UICtrl.clearInputs();
     }
@@ -138,8 +149,13 @@ const AppCtrl = (function(ItemCtrl, UICtrl) {
     init: function() {
       // fetch items from data structure
       const items = ItemCtrl.getItems();
-      // populate list with items - associate items with UI
-      UICtrl.populateItemList(items);
+      // check if any items
+      if (items.length === 0) {
+        UICtrl.hideList();
+      } else {
+        // populate list with items - associate items with UI
+        UICtrl.populateItemList(items);
+      }
       // load event listeners
       loadEventListeners();
     }
